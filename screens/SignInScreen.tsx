@@ -18,7 +18,7 @@ export default function SignInScreen({ navigation }: RootTabScreenProps<'SignIn'
       <Text style={{marginTop:-150,fontSize: 30,fontWeight:'bold'}}>
         Đăng nhập
       </Text>
-      <View style={{width:'90%',height:500,paddingTop:200,justifyContent: 'center',backgroundColor:'#B89BBD',}}>
+      <View style={{width:'90%',height:500,paddingTop:200,justifyContent: 'center',backgroundColor:'#ffd9e8',}}>
         <TextInput
           accessibilityLabel='Email'
           style={{height:'18%',justifyContent: 'center',borderWidth:1,paddingTop:1,marginVertical:5,margin:12,paddingLeft:25,borderRadius:15,backgroundColor:'white',}}
@@ -83,10 +83,10 @@ export default function SignInScreen({ navigation }: RootTabScreenProps<'SignIn'
         <Text style={{fontSize: 20,fontWeight:'bold',color:'white'}}> Đăng Nhập </Text>       
         
         </TouchableOpacity>
-        <View style={{marginTop:50,height:30,alignItems: 'center',justifyContent: 'center',backgroundColor:'#B89BBD',}}>
-        <Text style={{color:'#808080'}}>------ Or continue with ------</Text>
+        <View style={{marginTop:50,height:30,alignItems: 'center',justifyContent: 'center',backgroundColor:'#ffd9e8',}}>
+        <Text style={{color:'#c2b6bb'}}>------ Or continue with ------</Text>
         </View>
-        <View style={{backgroundColor:'#B89BBD',flexDirection:'row',justifyContent: 'center'}}>
+        <View style={{backgroundColor:'#ffd9e8',flexDirection:'row',justifyContent: 'center'}}>
             <TouchableOpacity
             style={{width:'40%',height:60,borderWidth:1,alignItems: 'center',backgroundColor:'white',justifyContent: 'center',margin:15,borderRadius:15}}
             onPress={()=>{
@@ -113,19 +113,19 @@ export default function SignInScreen({ navigation }: RootTabScreenProps<'SignIn'
 
 
         </View>
-        <View  style={{backgroundColor:'#B89BBD',flexDirection:'row',justifyContent: 'center'}}>
-          <Text style={{backgroundColor:'#B89BBD',}}>
+        <View  style={{backgroundColor:'#ffd9e8',flexDirection:'row',justifyContent: 'center'}}>
+          <Text style={{backgroundColor:'#ffd9e8',}}>
             Don't have an account?
           </Text>
           <TouchableOpacity
-          style={{width:'30%',alignItems: 'center',backgroundColor:'#B89BBD',justifyContent: 'center'}}
+          style={{width:'30%',alignItems: 'center',backgroundColor:'#ffd9e8',justifyContent: 'center'}}
           onPress={()=>{
         
                     navigation.navigate("SignUp")
                     
                 }} 
           >
-          <Text style={{color:'#E3B339'}}> sign up </Text>       
+          <Text style={{color:'red'}}> sign up </Text>       
           
           </TouchableOpacity>
 
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#B89BBD',
+    backgroundColor:'#ffd9e8',
   },
   title: {
     fontSize: 20,
