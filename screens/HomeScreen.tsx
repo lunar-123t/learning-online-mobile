@@ -9,6 +9,7 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
       <View style={{borderWidth:1,flexDirection:'row'}}>
+      
         <Text>
           xin chào bạn
         <TouchableOpacity
