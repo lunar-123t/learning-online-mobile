@@ -21,6 +21,7 @@ import TabStart from '../screens/StartScreen';
 import Home from '../screens/HomeScreen';
 import Nut from '../screens/NutScreen';
 import QuenMK from '../screens/QuenMKScreen';
+// import test from '../screens/test';
 
 // import TabOneScreen from '../screens/TabOneScreen';
 // import TabTwoScreen from '../screens/TabTwoScreen';
@@ -31,6 +32,8 @@ import HomeScreen from '../screens/HomeScreen';
 import TopicScreen from '../screens/TopicScreen';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
+// import testScreen from '../screens/testScreen';
+import Slidershow from '../screens/Slidershow';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -75,14 +78,6 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
-      {/* <BottomTab.Screen
-        name="TabStart"
-        component={StartNavigator}
-        options={({ navigation }: RootTabScreenProps<'TabStart'>) => ({
-          // title: 'Tab start',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        })}
-      /> */}
       <BottomTab.Screen
         name="TabTwo"
         component={HomeScreen}
@@ -138,12 +133,13 @@ const Stack1 = createNativeStackNavigator<RootStackParamList>();
 function StartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabStart" component={TabStart} options={{ headerShown: false }} />
+      <Stack.Screen name="Slidershow" component={TabStart} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
+      <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

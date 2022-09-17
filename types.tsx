@@ -25,6 +25,7 @@ export type RootStackParamList = {
   Nut: undefined;
   QuenMK: undefined;
   useTogglePasswordVisibility: undefined;
+  Slidershow: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -42,6 +43,7 @@ export type RootTabParamList = {
   Nut: undefined;
   QuenMK: undefined;
   useTogglePasswordVisibility: undefined;
+  Slidershow: undefined;
 
 };
 
