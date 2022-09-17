@@ -21,6 +21,7 @@ import TabStart from '../screens/StartScreen';
 import Home from '../screens/HomeScreen';
 import Nut from '../screens/NutScreen';
 import QuenMK from '../screens/QuenMKScreen';
+// import test from '../screens/test';
 
 // import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
@@ -29,6 +30,8 @@ import LinkingConfiguration from './LinkingConfiguration';
 import SignInScreen from '../screens/SignInScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TopicScreen from '../screens/TopicScreen';
+// import testScreen from '../screens/testScreen';
+import Slidershow from '../screens/Slidershow';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -74,10 +77,13 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabStart"
+        name='TabStart'
+        // NotFoundScreen={NamedNodeMap}
         component={StartNavigator}
         options={({ navigation }: RootTabScreenProps<'TabStart'>) => ({
           // title: 'Tab start',
+          
+          tabBarStyle:{display:'none'},
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -127,6 +133,14 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       /> */}
+      {/* <BottomTab.Screen
+        name="Slidershow"
+        component={Slidershow}
+        options={{
+          title: 'slider',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -152,6 +166,7 @@ function StartNavigator() {
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
+      <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
