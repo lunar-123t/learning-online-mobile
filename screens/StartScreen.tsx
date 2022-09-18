@@ -1,55 +1,52 @@
 
-import React from 'react';
-import {
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, } from 'react-native';
 // import { IMAGE_1, IMAGE_2, IMAGE_3 } from '../assets';
 import { RootTabScreenProps } from '../types';
+import { env } from '../env';
+import axios from 'axios';
+const { width, height } = Dimensions.get('window');
 
-const {width, height} = Dimensions.get('window');
+const COLORS = { primary: '#282534', white: '#fff' };
 
-const COLORS = {primary: '#282534', white: '#fff'};
+// const slides = [
+//   {
+//     image: "http://genk.mediacdn.vn/2017/15-ruff-etienne-1513221642291.jpg",
+//     title: 'Best Digital Solution',
+//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//   },
+//   {
+//     image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/3-1-1626444927.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=0nww5sftrDimoUxyn9lM5g",
+//     title: 'Achieve Your Goals',
+//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//   },
+//   {
+//     image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA",
+//     title: 'Increase Your Value',
+//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//   },
+// ];
 
-const slides = [
-  {
-    image: "http://genk.mediacdn.vn/2017/15-ruff-etienne-1513221642291.jpg",
-    title: 'Best Digital Solution',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-  {
-    image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/3-1-1626444927.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=0nww5sftrDimoUxyn9lM5g",
-    title: 'Achieve Your Goals',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-  {
-    image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA",
-    title: 'Increase Your Value',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-];
-export default function Slidershow({ navigation }: RootTabScreenProps<'Slidershow'>) {
-const Slide = ({item}) => {
-  return (
-    <View style={{alignItems: 'center'}}>
-      <Image
-        source={{uri:item?.image}}
-        style={{height: '75%', width, resizeMode: 'contain'}}
-      />
-      <View>
-        <Text style={styles.title}>{item?.title}</Text>
-        <Text style={styles.subtitle}>{item?.subtitle}</Text>
+const { baseUrl } = env();
+export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart'>) {
+  const [slider, setSlider] = React.useState([])
+  const [loading, setLoading] = React.useState(false);
+
+
+  const Slide = ({ item }) => {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Image
+          source={{ uri: item?.image }}
+          style={{ height: '75%', width, resizeMode: 'contain' }}
+        />
+        <View>
+          <Text style={styles.title}>{item?.text}</Text>
+          <Text style={styles.subtitle}>{item?.subtitle}</Text>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  };
 
 
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
@@ -62,19 +59,31 @@ const Slide = ({item}) => {
 
   const goToNextSlide = () => {
     const nextSlideIndex = currentSlideIndex + 1;
-    if (nextSlideIndex != slides.length) {
+    if (nextSlideIndex != slider.length) {
       const offset = nextSlideIndex * width;
-      ref?.current.scrollToOffset({offset});
+      ref?.current.scrollToOffset({ offset });
       setCurrentSlideIndex(currentSlideIndex + 1);
     }
   };
 
   const skip = () => {
-    const lastSlideIndex = slides.length - 1;
+    const lastSlideIndex = slider.length - 1;
     const offset = lastSlideIndex * width;
-    ref?.current.scrollToOffset({offset});
+    ref?.current.scrollToOffset({ offset });
     setCurrentSlideIndex(lastSlideIndex);
   };
+  useEffect(() => {
+    // Update the document title using the browser API
+    // setLoading(true);
+    axios.get(`${baseUrl}/slider/`).then((response) => {
+      const data = response.data;
+      // console.log(data)
+      setSlider(data)
+      setLoading(true);
+      // fetchData();
+    });
+  },[]);
+ 
 
   const Footer = () => {
     return (
@@ -92,7 +101,7 @@ const Slide = ({item}) => {
             marginTop: 20,
           }}>
           {/* Render indicator */}
-          {slides.map((_, index) => (
+          {slider.map((_, index) => (
             <View
               key={index}
               style={[
@@ -107,22 +116,22 @@ const Slide = ({item}) => {
         </View>
 
         {/* Render buttons */}
-        <View style={{marginBottom: 20}}>
-          {currentSlideIndex == slides.length - 1 ? (
-            <View style={{height: 50}}>
+        <View style={{ marginBottom: 20 }}>
+          {currentSlideIndex == slider.length - 1 ? (
+            <View style={{ height: 50 }}>
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => {
-                  navigation.navigate("SignIn")
+                  navigation.navigate("SignUp")
                 }}
-                >
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                EXPLORE NOW
+              >
+                <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                  EXPLORE NOW
                 </Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={[
@@ -143,7 +152,7 @@ const Slide = ({item}) => {
                   SKIP
                 </Text>
               </TouchableOpacity>
-              <View style={{width: 15}} />
+              <View style={{ width: 15 }} />
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={goToNextSlide}
@@ -164,20 +173,33 @@ const Slide = ({item}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <StatusBar backgroundColor={COLORS.primary} />
-      <FlatList
-        ref={ref}
-        onMomentumScrollEnd={updateCurrentSlideIndex}
-        contentContainerStyle={{height: height * 0.65}}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={slides}
-        pagingEnabled
-        renderItem={({item}) => <Slide item={item} />}
-      />
-      <Footer />
+
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <>
+        {loading ? (
+          <View>
+            <StatusBar backgroundColor={COLORS.primary} />
+            <FlatList
+              sliders={slider}
+              ref={ref}
+              onMomentumScrollEnd={updateCurrentSlideIndex}
+              contentContainerStyle={{ height: height * 0.65 }}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={slider}
+              // pagingEnabled
+              renderItem={({ item }) => <Slide item={item} />}
+            />
+            <Footer />
+          </View>
+        ) : (
+          <View>
+            <Text> </Text>
+          </View>
+        )}
+      </>
     </SafeAreaView>
+
   );
 };
 
