@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { Button, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, Button, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { Image } from 'react-native';
 import { RootTabScreenProps } from '../types';
@@ -12,7 +12,7 @@ export default function SignUpScreen(this: any, { navigation }: RootTabScreenPro
   const [email, setemail] = React.useState('');
   const [sodt, setsodt] = React.useState('');
   const [matkhau, setmatkhau] = React.useState('');
-  const baseUrl = "https://fe34-2402-800-6235-87e4-f829-3e20-8885-4f87.ap.ngrok.io"
+  const baseUrl = "https://975c-2402-800-6235-87e4-3839-5bb-4aa5-85d3.ap.ngrok.io"
 
     return (
       <View style={styles.container}>
@@ -72,12 +72,18 @@ export default function SignUpScreen(this: any, { navigation }: RootTabScreenPro
                   password: matkhau,
                   
                 }
-                    axios.post(`${baseUrl}/chinh/register/`,data_guilen).then((response) => {
+                    axios.post(`${baseUrl}/login/register/`,data_guilen).then((response) => {
                       console.log(response.data);
                       const id_taomoi = response.data["id"]
                       if(!id_taomoi)
                       {
-                          alert("Đăng ký thành công")
+                        Alert.alert(
+                          "Đăng Ký Thành Công",
+                          "Nhấn Ok để tiếp tục",
+                          [
+                            { text: "OK", onPress: () => navigation.navigate("SignIn") }
+                          ]
+                        );
                       }
                       else
                           alert("Đăng ký không thành công")

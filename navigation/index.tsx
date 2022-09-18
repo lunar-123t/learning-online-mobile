@@ -54,6 +54,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -133,7 +134,7 @@ const Stack1 = createNativeStackNavigator<RootStackParamList>();
 function StartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Slidershow" component={TabStart} options={{ headerShown: false }} />
+      <Stack.Screen name="TabStart" component={TabStart} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
