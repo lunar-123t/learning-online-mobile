@@ -38,6 +38,7 @@ export default function SignInScreen(this: any, { navigation }: RootTabScreenPro
           placeholder="Email hoặc số điện thoại"
         />
 
+        <View style={{width:'80%',borderRadius:8,height:'6.5%'}}>
         <TextInput
               style={{padding:15,width:'80%',height:'7%',justifyContent: 'center',marginVertical:5,borderRadius:8,backgroundColor:'white',}}
               // name="password"
@@ -50,9 +51,11 @@ export default function SignInScreen(this: any, { navigation }: RootTabScreenPro
               enablesReturnKeyAutomatically
               onChangeText={text => setMatkhau(text)}
             />
-            <Pressable style={{position: 'absolute',right:45,bottom:270}} onPress={handlePasswordVisibility}>
+            <Pressable style={{position: 'absolute',marginLeft:300,bottom:15}} onPress={handlePasswordVisibility}>
               <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
             </Pressable>
+        </View>
+        
 
         <TouchableOpacity
               style={{marginLeft:230,top:10}}

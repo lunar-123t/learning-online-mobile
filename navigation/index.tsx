@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, TouchableOpacity, Text } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,14 +21,19 @@ import TabStart from '../screens/StartScreen';
 import Home from '../screens/HomeScreen';
 import Nut from '../screens/NutScreen';
 import QuenMK from '../screens/QuenMKScreen';
+// import test from '../screens/test';
 
 // import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+// import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import SignInScreen from '../screens/SignInScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TopicScreen from '../screens/TopicScreen';
+import { Header } from 'react-native/Libraries/NewAppScreen';
+
+// import testScreen from '../screens/testScreen';
+import Slidershow from '../screens/Slidershow';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -49,6 +54,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -74,59 +80,41 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabStart"
-        component={StartNavigator}
-        options={({ navigation }: RootTabScreenProps<'TabStart'>) => ({
-          // title: 'Tab start',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      {/* <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
+        component={HomeScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
-      /> */}
-      {/* <BottomTab.Screen
-        name="SignIn"
-        component={SignInScreen}
-        options={{
-          title: 'Sign in',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      /> */}
-      {/* <BottomTab.Screen
+      />
+        <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Chat',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="wechat" color={color} />,
         }}
-      /> */}
-      {/* <BottomTab.Screen
-        name="Topic"
-        component={TopicScreen}
+      />
+        <BottomTab.Screen
+        name="Nut"
+        component={HomeScreen}
         options={{
-          title: 'topic',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Notifications',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
         }}
-      /> */}
+      />
+      <BottomTab.Screen
+        name="SignIn"
+        component={HomeScreen}
+        options={{
+          title: 'Settings',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -152,6 +140,8 @@ function StartNavigator() {
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
+      <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
+
