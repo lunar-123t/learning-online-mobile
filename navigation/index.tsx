@@ -34,6 +34,7 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 
 // import testScreen from '../screens/testScreen';
 import Slidershow from '../screens/Slidershow';
+import SignUpScreen from '../screens/SignUpScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -55,6 +56,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="TabStart" component={ StartNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -133,9 +135,9 @@ const Stack1 = createNativeStackNavigator<RootStackParamList>();
 function StartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Slidershow" component={TabStart} options={{ headerShown: false }} />
+      <Stack.Screen name="TabStart" component={TabStart} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+      <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
