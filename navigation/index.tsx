@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable, TouchableOpacity, Text } from 'react-native';
+import { ColorSchemeName, Pressable, TouchableOpacity, Text, View } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -30,10 +30,13 @@ import LinkingConfiguration from './LinkingConfiguration';
 import SignInScreen from '../screens/SignInScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TopicScreen from '../screens/TopicScreen';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+
 
 // import testScreen from '../screens/testScreen';
 import Slidershow from '../screens/Slidershow';
+import Header from '../screens/Header';
+
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -55,6 +58,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      {/* <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -133,7 +137,7 @@ const Stack1 = createNativeStackNavigator<RootStackParamList>();
 function StartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Slidershow" component={TabStart} options={{ headerShown: false }} />
+      <Stack.Screen name="TabStart" component={TabStart} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
@@ -143,4 +147,10 @@ function StartNavigator() {
     </Stack.Navigator>
   )
 }
-
+function StartNavigator1() {
+  return (
+    <Stack1.Navigator>
+      <Stack1.Screen name="Slidershow" component={Header} options={{ headerShown: false }} />
+    </Stack1.Navigator>
+  )
+}

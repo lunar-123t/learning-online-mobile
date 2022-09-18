@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 4,
         borderColor: "white",
+ 
     },
     row: {
         flexDirection: "row",
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor : "#fff",
         elevation:8,
         paddingVertical: 12,
+        marginTop:15
 
     },
     test:{
