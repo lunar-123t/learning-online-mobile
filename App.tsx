@@ -7,7 +7,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import Header from './screens/Header';
 
 
 export default function App() {
@@ -19,7 +18,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Header/>
+        {/* <Header/> */}
         <Navigation colorScheme={colorScheme} />
         <StatusBar />
         {/* <Bottom/> */}

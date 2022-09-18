@@ -15,9 +15,9 @@ import { ImageBackground } from 'react-native';
 export default function TabTwoScreen() {
   return (
     <View>
-      {/* <View>
+      <View>
         <Header />
-      </View> */}
+      </View>
       <View style={styles.view2} >
         {/* <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
         <View>
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   },
   view2: {
     position: 'absolute',
-    top: 0,
+    top: 150,
     left: 15,
   },
   view3: {
     position: 'absolute',
-    top: 290,
+    top: 430,
     left: 15,
   },
   text: {
