@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, } from 'react-native';
-// import { IMAGE_1, IMAGE_2, IMAGE_3 } from '../assets';
 import { RootTabScreenProps } from '../types';
 import { env } from '../env';
 import axios from 'axios';
@@ -9,23 +8,6 @@ const { width, height } = Dimensions.get('window');
 
 const COLORS = { primary: '#282534', white: '#fff' };
 
-// const slides = [
-//   {
-//     image: "http://genk.mediacdn.vn/2017/15-ruff-etienne-1513221642291.jpg",
-//     title: 'Best Digital Solution',
-//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//   },
-//   {
-//     image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/3-1-1626444927.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=0nww5sftrDimoUxyn9lM5g",
-//     title: 'Achieve Your Goals',
-//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//   },
-//   {
-//     image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA",
-//     title: 'Increase Your Value',
-//     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//   },
-// ];
 
 const { baseUrl } = env();
 export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart'>) {
@@ -73,14 +55,11 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
     setCurrentSlideIndex(lastSlideIndex);
   };
   useEffect(() => {
-    // Update the document title using the browser API
-    // setLoading(true);
     axios.get(`${baseUrl}/slider/`).then((response) => {
       const data = response.data;
-      // console.log(data)
       setSlider(data)
       setLoading(true);
-      // fetchData();
+      
     });
   },[]);
  
@@ -93,14 +72,12 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
           justifyContent: 'space-between',
           paddingHorizontal: 20,
         }}>
-        {/* Indicator container */}
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             marginTop: 20,
           }}>
-          {/* Render indicator */}
           {slider.map((_, index) => (
             <View
               key={index}
@@ -115,7 +92,6 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
           ))}
         </View>
 
-        {/* Render buttons */}
         <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slider.length - 1 ? (
             <View style={{ height: 50 }}>
@@ -187,7 +163,7 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
               showsHorizontalScrollIndicator={false}
               horizontal
               data={slider}
-              // pagingEnabled
+              
               renderItem={({ item }) => <Slide item={item} />}
             />
             <Footer />
