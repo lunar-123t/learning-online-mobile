@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, AsyncStorage, Alert, } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import { env } from '../env';
 import axios from 'axios';
@@ -54,15 +54,39 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
     ref?.current.scrollToOffset({ offset });
     setCurrentSlideIndex(lastSlideIndex);
   };
-  useEffect(() => {
-    axios.get(`${baseUrl}/slider/`).then((response) => {
+  useEffect(async () => {
+    try {
+      const valueStorage = await AsyncStorage.getItem('taikhoandaluu')
+      if(valueStorage !== null)
+      {
+        Alert.alert(
+          "Đăng Nhập Thành Công",
+          "Nhấn Ok để tiếp tục",
+          [
+            {
+              text: "Đăng Ký Lại Tài Khoản",
+              onPress: () => navigation.navigate("SignUp"),
+              
+            },
+
+            { text: "OK", onPress: () => navigation.navigate("Home") }
+          ]
+        );
+      }
+    } catch (e) {
+      // error reading value
+    }
+    axios.get(`${baseUrl}/slider/`).then(async (response) => {
+      
+      
+      
       const data = response.data;
       setSlider(data)
       setLoading(true);
-      
+
     });
-  },[]);
- 
+  }, []);
+
 
   const Footer = () => {
     return (
@@ -163,7 +187,7 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
               showsHorizontalScrollIndicator={false}
               horizontal
               data={slider}
-              
+
               renderItem={({ item }) => <Slide item={item} />}
             />
             <Footer />
@@ -216,4 +240,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+function onChangtaikhoanluu(valueStorage: string) {
+  throw new Error('Function not implemented.');
+}
 // export default Slidershow;
