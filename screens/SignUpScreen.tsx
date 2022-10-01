@@ -6,13 +6,14 @@ import { Image } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import { useTogglePasswordVisibility } from './useTogglePasswordVisibility';
 import axios from 'axios';
+import { env } from '../env';
 
 export default function SignUpScreen(this: any, { navigation }: RootTabScreenProps<'SignUp'>) {
   const { passwordVisibility, rightIcon,handlePasswordVisibility } = useTogglePasswordVisibility();
   const [email, setemail] = React.useState('');
   const [sodt, setsodt] = React.useState('');
   const [matkhau, setmatkhau] = React.useState('');
-  const baseUrl = "https://975c-2402-800-6235-87e4-3839-5bb-4aa5-85d3.ap.ngrok.io"
+  const { baseUrl } = env();
 
     return (
       <View style={styles.container}>
