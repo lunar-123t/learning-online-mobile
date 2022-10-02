@@ -40,7 +40,8 @@ const Danhsach=[
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
         tenbai: 'Laravel-bai 6',
-        thoiluong: '3:00'
+        thoiluong: '3:00',
+        video_id: "n6Pnzi6r9NU"
       },
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
