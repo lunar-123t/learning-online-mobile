@@ -27,6 +27,9 @@ export type RootStackParamList = {
   useTogglePasswordVisibility: undefined;
   Slidershow: undefined;
   Header:undefined;
+  VideoScreen: undefined;
+
+
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -46,6 +49,8 @@ export type RootTabParamList = {
   useTogglePasswordVisibility: undefined;
   Slidershow: undefined;
   Header:undefined;
+  VideoScreen: undefined;
+
 
 };
 
