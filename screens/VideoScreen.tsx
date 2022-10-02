@@ -28,12 +28,14 @@ const Danhsach=[
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
         tenbai: 'Laravel-bai 4',
-        thoiluong: '3:00'
+        thoiluong: '3:00',
+        video_id: "dV-znS6RPbQ"
       },
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
         tenbai: 'Laravel-bai 5',
-        thoiluong: '3:00'
+        thoiluong: '3:00',
+        video_id: "n6Pnzi6r9NU"
       },
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
