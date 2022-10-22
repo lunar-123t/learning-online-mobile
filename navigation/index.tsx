@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable, TouchableOpacity, Text, View } from 'react-native';
+import { ColorSchemeName, Pressable, TouchableOpacity, Text, View, Button } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,6 +21,7 @@ import TabStart from '../screens/StartScreen';
 import Home from '../screens/HomeScreen';
 import Nut from '../screens/NutScreen';
 import QuenMK from '../screens/QuenMKScreen';
+
 // import test from '../screens/test';
 
 // import TabOneScreen from '../screens/TabOneScreen';
@@ -30,11 +31,17 @@ import LinkingConfiguration from './LinkingConfiguration';
 import SignInScreen from '../screens/SignInScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TopicScreen from '../screens/TopicScreen';
+import VideoScreen from '../screens/VideoScreen';
 
 
 // import testScreen from '../screens/testScreen';
 import Slidershow from '../screens/Slidershow';
 import Header from '../screens/Header';
+
+// import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from "react-native-vector-icons/Ionicons"
+import TopicListLopHocScreen from '../screens/ListLopHocScreen';
+import ListLopHocScreen from '../screens/ListLopHocScreen';
 
 
 
@@ -57,11 +64,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} />
+      {/* <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="VideoScreen" component={VideoScreen}/>
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Screen name="Modal" component={ModalScreen} />
+      
+
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -101,12 +111,21 @@ function BottomTabNavigator() {
         }}
       />
         <BottomTab.Screen
-        name="Nut"
-        component={HomeScreen}
+        name="VideoScreen"
+        component={VideoNavigator}
         options={{
-          title: 'Notifications',
+          title: 'Video',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="ListLopHocScreen"
+        component={ListLopHocNavigator}
+        options={{
+          title: 'class',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="wechat" color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -118,6 +137,15 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
         }}
       />
+        {/* <BottomTab.Screen
+        name="Nut"
+        component={HomeScreen}
+        options={{
+          title: 'Notifications',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
+        }} */}
+      {/* /> */}
     </BottomTab.Navigator>
   );
 }
@@ -144,7 +172,42 @@ function StartNavigator() {
       <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
       <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
+      <Stack.Screen name="VideoScreen" component={VideoScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
+  )
+}
+function VideoNavigator(){
+  return (
+    <Stack1.Navigator>
+      <Stack1.Screen name="Laravel"  component={VideoScreen} options={{
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => alert("Home")}
+            >
+              <View>
+                <Icon name="arrow-back-outline" size={40}></Icon>
+              </View>
+            </TouchableOpacity>
+          )}} />
+          
+    </Stack1.Navigator>
+  )
+}
+function ListLopHocNavigator(){
+  return (
+    <Stack1.Navigator>
+      <Stack1.Screen name="Class"  component={ListLopHocScreen} options={{
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => alert("Home")}
+            >
+              <View>
+                <Icon name="arrow-back-outline" size={40}></Icon>
+              </View>
+            </TouchableOpacity>
+          )}} />
+          
+    </Stack1.Navigator>
   )
 }
 function StartNavigator1() {
