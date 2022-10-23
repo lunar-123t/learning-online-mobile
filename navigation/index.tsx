@@ -35,6 +35,11 @@ import TopicScreen from '../screens/TopicScreen';
 // import testScreen from '../screens/testScreen';
 import Slidershow from '../screens/Slidershow';
 import Header from '../screens/Header';
+import QuenMKScreen from '../screens/QuenMKScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import NutScreen from '../screens/NutScreen';
+
+
 
 
 
@@ -57,7 +62,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabStart" component={StartNavigator} options={{ headerShown: false }} />
+      {/* StartNavigator */}
+      {/* BottomTabNavigator */}
+      {/* <Stack.Screen name="Root" component={StartNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -78,13 +85,13 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabStart"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabTwo"
-        component={HomeScreen}
+        name="Home"
+        component={StartNavigator}
         options={{
           title: 'Home',
           headerShown: false,
@@ -92,7 +99,7 @@ function BottomTabNavigator() {
         }}
       />
         <BottomTab.Screen
-        name="Home"
+        name="Chats"
         component={HomeScreen}
         options={{
           title: 'Chat',
@@ -101,7 +108,7 @@ function BottomTabNavigator() {
         }}
       />
         <BottomTab.Screen
-        name="Nut"
+        name="Notifications"
         component={HomeScreen}
         options={{
           title: 'Notifications',
@@ -110,7 +117,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="SignIn"
+        name="Settings"
         component={HomeScreen}
         options={{
           title: 'Settings',
@@ -132,25 +139,19 @@ function TabBarIcon(props: {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
-const Stack1 = createNativeStackNavigator<RootStackParamList>();
+// const Stack1 = createNativeStackNavigator<RootStackParamList>();
 
 function StartNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabStart" component={TabStart} options={{ headerShown: false }} />
-      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
-      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Stack.Screen name="Nut" component={Nut} options={{ headerShown: false }} />
-      <Stack.Screen name="QuenMK" component={QuenMK} options={{ headerShown: false }} />
+      <Stack.Screen name="TabStart" component={StartScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Nut" component={NutScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="QuenMK" component={QuenMKScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
-function StartNavigator1() {
-  return (
-    <Stack1.Navigator>
-      <Stack1.Screen name="Slidershow" component={Header} options={{ headerShown: false }} />
-    </Stack1.Navigator>
-  )
-}
+

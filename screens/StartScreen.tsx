@@ -1,11 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, AsyncStorage, Alert, } from 'react-native';
+import {AsyncStorage, SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, Alert, } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import { env } from '../env';
 import axios from 'axios';
 const { width, height } = Dimensions.get('window');
-
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 const COLORS = { primary: '#282534', white: '#fff' };
 
 
@@ -54,37 +54,34 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
     ref?.current.scrollToOffset({ offset });
     setCurrentSlideIndex(lastSlideIndex);
   };
-  useEffect(async () => {
+  useEffect(() => {
     try {
-      const valueStorage = await AsyncStorage.getItem('taikhoandaluu')
-      if(valueStorage !== null)
-      {
-        Alert.alert(
-          "Đăng Nhập Thành Công",
-          "Nhấn Ok để tiếp tục",
-          [
-            {
-              text: "Đăng Ký Lại Tài Khoản",
-              onPress: () => navigation.navigate("SignUp"),
-              
-            },
-
-            { text: "OK", onPress: () => navigation.navigate("Home") }
-          ]
-        );
+      const valueStorage = async () => {
+        const value = await AsyncStorage.getItem('taikhoandaluu')
+        console.log(value)
+        if (value !== null) {
+          navigation.navigate("Home")
+        }
+        else {
+          console.log("xuong day")
+          axios.get(`${baseUrl}/slider/`).then(async (response) => {
+            const data = response.data;
+            setSlider(data)
+            setLoading(true);
+            // console.log(response)
+          }).catch((e) => {
+            console.log("ERRROR")
+            // error reading value
+          });
+        }
       }
+      valueStorage()     
     } catch (e) {
+      console.log("ERRROR")
       // error reading value
     }
-    axios.get(`${baseUrl}/slider/`).then(async (response) => {
-      
-      
-      
-      const data = response.data;
-      setSlider(data)
-      setLoading(true);
+    
 
-    });
   }, []);
 
 
