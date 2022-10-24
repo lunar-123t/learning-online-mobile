@@ -4,28 +4,57 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Button
+  Button,
+
+  Alert,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './Header';
 import Icon from "react-native-vector-icons/Ionicons"
 import { ImageBackground } from 'react-native';
+import { RootTabScreenProps } from '../types';
+import axios from 'axios';
+import { env } from '../env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Home'>) {
+  // const Logout = async () => {
+  //   const valueStorage =  await AsyncStorage.getItem('taikhoandaluu')
+  //   console.log(valueStorage)
+  //   Alert.alert(
+  //     "Do you want to sign out?",
+  //     "Pess OK to continue",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => console.log("Cancel Pressed"),
+  //       },
+  //       { 
+  //         text: "OK", onPress:  async () => {
+  //         try {
+  //           if(valueStorage !== null)
+  //           {
+  //             await AsyncStorage.removeItem('taikhoandaluu')
+  //             navigation.navigate('SignIn')
+  //           }else{
+  //           }
+  //         }catch(e) {
+  //           console.log('2.')
+  //         }
+          
+  //       }
+        
+  //      }     
+  //     ]
+  //   );
+  // }
 
-export default function TabTwoScreen() {
   return (
     <View>
       <View>
-        <Header />
+        <Header navigation={navigation} route={route} />
       </View>
       <View style={styles.view2} >
-        {/* <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
-        <View>
-          <Text style={styles.text}>Khoa hoc mien phi</Text>
-          <TouchableOpacity>
-            <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
-          </TouchableOpacity>
-        </View> */}
         <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
           <Text style={styles.text}>khoa hoc mien phi</Text>
           <TouchableOpacity>
@@ -34,13 +63,6 @@ export default function TabTwoScreen() {
         </ImageBackground>
       </View>
       <View style={styles.view3} >
-        {/* <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
-        <View>
-          <Text style={styles.text}>Khoa hoc mien phi</Text>
-          <TouchableOpacity>
-            <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
-          </TouchableOpacity>
-        </View> */}
         <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
           <Text style={styles.text}>khoa hoc tra phi</Text>
           <TouchableOpacity>
@@ -48,6 +70,9 @@ export default function TabTwoScreen() {
           </TouchableOpacity>
         </ImageBackground>
       </View>
+      {/* <TouchableOpacity onPress={() => Logout()}>
+        <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
+      </TouchableOpacity> */}
     </View>
   );
 }
