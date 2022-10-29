@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { Button, View, StyleSheet, Alert, Text, Image, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
+=======
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity, AsyncStorage } from "react-native";
+>>>>>>> 857dd7007462f483731d8d95f40f47c08051f9f9
 import YoutubePlayer from "react-native-youtube-iframe";
 
 import Icon from "react-native-vector-icons/Ionicons"
@@ -13,6 +18,8 @@ const config = {
   }
 };
 const { baseUrl } = env();
+<<<<<<< HEAD
+=======
 const Danhsach=[
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
@@ -63,12 +70,17 @@ const Danhsach=[
 
 
 ]
+>>>>>>> 857dd7007462f483731d8d95f40f47c08051f9f9
 
 export default function VideoScreen() {
   const [videoid, setVideoid] = useState("O71GdeeND68");
   const [playing, setPlaying] = useState(false);
   const [dsvideo, setDsvideo] = React.useState([]);
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> 857dd7007462f483731d8d95f40f47c08051f9f9
   const onStateChange = useCallback((state: string) => {
     if (state === "ended") {
       setPlaying(false);
@@ -85,20 +97,48 @@ export default function VideoScreen() {
     axios.get(`${baseUrl}khoahoc/listvideo`, config).then((response) => {
       const data = response.data;
       setDsvideo(data);
+<<<<<<< HEAD
+    }).catch((e) => {
+
+=======
     }).catch((e)=>{
       
+>>>>>>> 857dd7007462f483731d8d95f40f47c08051f9f9
       console.log(e)
     });
   }, []);
 
 
-  const Item = ({item}) => (
-    <View style={{width:'99.5%',height:101,backgroundColor:'#f2f2f2',margin:1}}>
-      
-        <TouchableOpacity style={{flexDirection:'row'}}
-        onPress={()=>{
-          
+  const Item = ({ item }) => (
+    <View style={{ width: '99.5%', height: 101, backgroundColor: '#f2f2f2', margin: 1 }}>
+
+      <TouchableOpacity style={{ flexDirection: 'row' }}
+        onPress={() => {
+
           setVideoid(item.video_id)
+<<<<<<< HEAD
+
+        }}
+      >
+        <View style={{ width: '50%', height: 50, margin: 1 }}>
+
+          <Image
+            style={{ width: '80%', height: 98 }}
+            source={{ uri: item.url_anh }}
+          />
+        </View>
+        <View style={{ right: 30 }}>
+          <Text>
+            {item.ten_bai}
+          </Text>
+          <Text>
+            <Icon name="time-outline" size={14} />
+            {item.thoi_luong}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+=======
           
       }} 
         >
@@ -120,14 +160,15 @@ export default function VideoScreen() {
           </View>
         </TouchableOpacity>    
     </View>       
+>>>>>>> 857dd7007462f483731d8d95f40f47c08051f9f9
   );
 
 
   return (
-    <View style={{borderWidth:1,height:760,backgroundColor:'#ffffff'}}>
-      
+    <View style={{ borderWidth: 1, height: 760, backgroundColor: '#ffffff' }}>
+
       <YoutubePlayer
-        
+
         height={229}
         play
         videoId={videoid}
@@ -157,8 +198,8 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 
-  logo:{
-    width:'100%',
-    height:300
+  logo: {
+    width: '100%',
+    height: 300
   }
 });
