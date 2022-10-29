@@ -1,11 +1,18 @@
 
-import React, { useState, useCallback, useRef } from "react";
-import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 
 import Icon from "react-native-vector-icons/Ionicons"
-
-
+import { env } from "../env";
+import axios from "axios";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ3MzkxLCJpYXQiOjE2NjY1MTEzOTEsImp0aSI6IjEwMzNmZmFjZTZhMDRiZGJiMjUyNGFhODAzZmFlYTQzIiwidXNlcl9pZCI6Mn0.wCtQueyw0gdpW_5gFfzMuZimS0lJWnu0wMUlY_f70iI"
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
+const { baseUrl } = env();
 const Danhsach=[
       {
         anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVIdoPWcjlGpJKQFOv9qOuC5eHKneQLn1Sg&usqp=CAU",
@@ -60,8 +67,8 @@ const Danhsach=[
 export default function VideoScreen() {
   const [videoid, setVideoid] = useState("O71GdeeND68");
   const [playing, setPlaying] = useState(false);
-
-
+  const [dsvideo, setDsvideo] = React.useState([]);
+  
   const onStateChange = useCallback((state: string) => {
     if (state === "ended") {
       setPlaying(false);
@@ -73,7 +80,16 @@ export default function VideoScreen() {
     setPlaying((prev) => !prev);
   }, []);
 
-  
+  useEffect(() => {
+    console.log(`${baseUrl}khoahoc/listvideo`);
+    axios.get(`${baseUrl}khoahoc/listvideo`, config).then((response) => {
+      const data = response.data;
+      setDsvideo(data);
+    }).catch((e)=>{
+      
+      console.log(e)
+    });
+  }, []);
 
 
   const Item = ({item}) => (
@@ -90,21 +106,22 @@ export default function VideoScreen() {
             
             <Image
               style={{width:'80%',height:98}}
-              source={{uri:item.anh}}
+              source={{uri:item.url_anh}}
             />
           </View>
           <View style={{right:30}}>
             <Text>
-               {item.tenbai}
+               {item.ten_bai}
             </Text>
             <Text>
               <Icon name="time-outline" size={14}/>
-              {item.thoiluong}
+              {item.thoi_luong}
             </Text>
           </View>
         </TouchableOpacity>    
     </View>       
   );
+
 
   return (
     <View style={{borderWidth:1,height:760,backgroundColor:'#ffffff'}}>
@@ -118,7 +135,7 @@ export default function VideoScreen() {
         onChangeState={onStateChange}
       />
       <FlatList
-        data={Danhsach}
+        data={dsvideo}
         renderItem={Item}
       />
     </View>
