@@ -6,6 +6,7 @@ import { env } from "../env";
 import axios from "axios";
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ3MzkxLCJpYXQiOjE2NjY1MTEzOTEsImp0aSI6IjEwMzNmZmFjZTZhMDRiZGJiMjUyNGFhODAzZmFlYTQzIiwidXNlcl9pZCI6Mn0.wCtQueyw0gdpW_5gFfzMuZimS0lJWnu0wMUlY_f70iI"
 const config = {
+  
   headers: {
     Authorization: `Bearer ${token}`
   }
