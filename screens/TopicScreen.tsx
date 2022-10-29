@@ -12,7 +12,6 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNz
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
-    data: { "idkhoahoc": 1 }
   }
 };
 export default function TopicScreen(this: any, { navigation }: RootTabScreenProps<'Topic'>) {
@@ -21,7 +20,6 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
     <TouchableOpacity
     onPress={
       ()=>{
-        console.log("aaaaa")
         navigation.navigate("Video")
     }}
     >
