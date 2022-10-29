@@ -12,9 +12,9 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNz
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
-
   }
 };
+
 export default function TopicScreen(this: any, { navigation }: RootTabScreenProps<'Topic'>) {
   const [dskhoahocstate, setdskhoahoc] = React.useState([])
   const Item = ({ item }) => (
