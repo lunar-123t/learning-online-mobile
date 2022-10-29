@@ -87,7 +87,7 @@ export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'Lis
         <TouchableOpacity
           style={{ width: 150, height: 160, borderWidth: 1,borderColor:"#DDDDDD", borderRadius: 10, bottom: 0, left: 20 }}
           onPress={() => {
-            // navigation.navigate("Nut")
+            navigation.navigate('VideoScreen')
 
           }}
         >
@@ -126,21 +126,7 @@ export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'Lis
                   numColumns={2} 
                 />
               </View> 
-      {/* <>
-        {loading ? (
-          <View>
-            <FlatList
-              data={dsState}
-              renderItem={Item}
-              numColumns={2} 
-            />
-          </View>
-        ) : (
-          <View>
-            <Text> </Text>
-          </View>
-        )}
-      </> */}
+     
     </View>
   );
 }

@@ -38,6 +38,13 @@ import Header from '../screens/Header';
 import QuenMKScreen from '../screens/QuenMKScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import NutScreen from '../screens/NutScreen';
+import ChatScreen from '../screens/ChatScreen';
+import NoticationsScreen from '../screens/NotificationsScreen';
+import SettingScreen from '../screens/SettingScreen';
+import ListLopHocScreen from '../screens/ListLopHocScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
+import VideoScreen from '../screens/VideoScreen';
+// import { Icon } from 'react-native-vector-icons/Icon';
 
 
 
@@ -65,6 +72,7 @@ function RootNavigator() {
       {/* StartNavigator */}
       {/* BottomTabNavigator */}
       {/* <Stack.Screen name="Root" component={StartNavigator} options={{ headerShown: false }} /> */}
+      {/* <Stack.Screen name="Home" component={HomeNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -91,25 +99,25 @@ function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="Home"
-        component={StartNavigator}
+        component={HomeNavigator}
         options={{
           title: 'Home',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
-        <BottomTab.Screen
+      <BottomTab.Screen
         name="Chats"
-        component={HomeScreen}
+        component={ChatScreen}
         options={{
           title: 'Chat',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="wechat" color={color} />,
         }}
       />
-        <BottomTab.Screen
+      <BottomTab.Screen
         name="Notifications"
-        component={HomeScreen}
+        component={NoticationsScreen}
         options={{
           title: 'Notifications',
           headerShown: false,
@@ -118,7 +126,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Settings"
-        component={HomeScreen}
+        component={SettingScreen}
         options={{
           title: 'Settings',
           headerShown: false,
@@ -155,3 +163,49 @@ function StartNavigator() {
   )
 }
 
+
+
+
+function HomeNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      {/* <Stack.Screen name="ListLopHocScreen" component={ListLopHocScreen} options={{ headerShown: false }} /> */}
+      <Stack.Screen name='ListLopHocScreen' component={ListLopHocScreen} options={{
+        headerRight: () => (
+          <TouchableOpacity
+          >
+            <View>
+              <Icon name="reorder-three-outline" size={40}></Icon>
+            </View>
+          </TouchableOpacity>
+        )
+      }}
+      />
+      {/* <Stack.Screen name="Topic" component={TopicScreen} options={{ headerShown: false }} /> */}
+      <Stack.Screen name='Topic' component={TopicScreen} options={{
+        headerRight: () => (
+          <TouchableOpacity
+          >
+            <View>
+              <Icon name="reorder-three-outline" size={40}></Icon>
+            </View>
+          </TouchableOpacity>
+        )
+      }}
+      />
+      
+      <Stack.Screen name='VideoScreen' component={VideoScreen} options={{
+        headerRight: () => (
+          <TouchableOpacity
+          >
+            <View>
+              <Icon name="reorder-three-outline" size={40}></Icon>
+            </View>
+          </TouchableOpacity>
+        )
+      }}
+      />
+    </Stack.Navigator>
+  )
+}

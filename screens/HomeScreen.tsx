@@ -41,9 +41,9 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
   //         }catch(e) {
   //           console.log('2.')
   //         }
-          
+
   //       }
-        
+
   //      }     
   //     ]
   //   );
@@ -54,22 +54,32 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
       <View>
         <Header navigation={navigation} route={route} />
       </View>
-      <View style={styles.view2} >
+      <TouchableOpacity style={styles.view2}
+        onPress={() => {
+          navigation.navigate('Topic')
+
+        }}
+      >
         <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
           <Text style={styles.text}>khoa hoc mien phi</Text>
-          <TouchableOpacity>
+          <View>
             <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
-          </TouchableOpacity>
+          </View>
         </ImageBackground>
-      </View>
-      <View style={styles.view3} >
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.view3}
+        onPress={() => {
+          navigation.navigate('Topic')
+
+        }}
+      >
         <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
           <Text style={styles.text}>khoa hoc tra phi</Text>
           <TouchableOpacity>
             <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
           </TouchableOpacity>
         </ImageBackground>
-      </View>
+      </TouchableOpacity>
       {/* <TouchableOpacity onPress={() => Logout()}>
         <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
       </TouchableOpacity> */}

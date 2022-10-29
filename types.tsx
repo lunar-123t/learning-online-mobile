@@ -31,7 +31,11 @@ export type RootStackParamList = {
   Notifications:undefined;
   Settings:undefined;
   test:undefined;
-
+  ListLopHocScreen:undefined;
+  ChatScreen:undefined;
+  NoticationsScreen:undefined;
+  SettingScreen:undefined;
+  VideoScreen: undefined;
 
 
 };
@@ -57,6 +61,11 @@ export type RootTabParamList = {
   Notifications:undefined;
   Settings:undefined;
   test:undefined;
+  ListLopHocScreen:undefined;
+  ChatScreen:undefined;
+  NoticationsScreen:undefined;
+  SettingScreen:undefined;
+  VideoScreen: undefined;
 
 };
 
