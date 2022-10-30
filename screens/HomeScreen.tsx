@@ -1,13 +1,5 @@
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import {
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Button,
-
-  Alert,
-} from 'react-native';
+import {StyleSheet,TouchableOpacity,Alert,FlatList} from 'react-native';
 import React, { useEffect } from 'react';
 import Header from './Header';
 import Icon from "react-native-vector-icons/Ionicons"
@@ -17,72 +9,96 @@ import axios from 'axios';
 import { env } from '../env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const { baseUrl } = env();
 export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Home'>) {
-  // const Logout = async () => {
-  //   const valueStorage =  await AsyncStorage.getItem('taikhoandaluu')
-  //   console.log(valueStorage)
-  //   Alert.alert(
-  //     "Do you want to sign out?",
-  //     "Pess OK to continue",
-  //     [
-  //       {
-  //         text: "Cancel",
-  //         onPress: () => console.log("Cancel Pressed"),
-  //       },
-  //       { 
-  //         text: "OK", onPress:  async () => {
-  //         try {
-  //           if(valueStorage !== null)
-  //           {
-  //             await AsyncStorage.removeItem('taikhoandaluu')
-  //             navigation.navigate('SignIn')
-  //           }else{
-  //           }
-  //         }catch(e) {
-  //           console.log('2.')
-  //         }
+  const [dskhoahocState, setDskhoahocState] = React.useState([])
+  const Logout = async () => {
+    const valueStorage = await AsyncStorage.getItem('taikhoandaluu')
+    console.log(valueStorage)
+    Alert.alert(
+      "Do you want to sign out?",
+      "Pess OK to continue ",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+        },
+        {
+          text: "OK", onPress: async () => {
+            try {
+              if (valueStorage !== null) {
+                await AsyncStorage.removeItem('taikhoandaluu')
+                navigation.navigate('SignIn')
+              } else {
+              }
+            } catch (e) {
+              console.log('2.')
+            }
+          }
+        }
+      ]
+    );
+  }
 
-  //       }
-
-  //      }     
-  //     ]
-  //   );
-  // }
-
-  return (
+  const Item = ({ item }) => (
     <View>
-      <View>
-        <Header navigation={navigation} route={route} />
-      </View>
-      <TouchableOpacity style={styles.view2}
+
+      <TouchableOpacity style={{}}
         onPress={() => {
           navigation.navigate('Topic')
-
         }}
       >
-        <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
-          <Text style={styles.text}>khoa hoc mien phi</Text>
+        <ImageBackground style={styles.img} source={{ uri: item.url_anh }} resizeMode="cover">
+          <Text style={styles.text}>{item.ten_khoa_hoc}</Text>
           <View>
             <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
           </View>
         </ImageBackground>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.view3}
-        onPress={() => {
-          navigation.navigate('Topic')
-
-        }}
-      >
-        <ImageBackground style={styles.img} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} resizeMode="cover">
-          <Text style={styles.text}>khoa hoc tra phi</Text>
-          <TouchableOpacity>
-            <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
-          </TouchableOpacity>
-        </ImageBackground>
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={() => Logout()}>
+      <TouchableOpacity onPress={() => Logout()}>
         <Icon style={styles.icon} name="arrow-forward-outline" size={30} color="#000000" />
-      </TouchableOpacity> */}
+      </TouchableOpacity>
+
+    </View>
+
+  );
+
+  useEffect(() => {
+    try {
+      const valueStorage = async () => {
+        const value = await AsyncStorage.getItem('taikhoandaluu')
+        const config = {
+          headers: { Authorization: `Bearer ${value}` },
+          data: { "idlevel": 1 }
+        };
+        // console.log("hahaha")
+        // console.log(value)
+        axios.get(`${baseUrl}/khoahoc/listkhoahoc`, config).then(async (response) => {
+          const data = response.data;
+          setDskhoahocState(data)
+          // console.log(data)
+        }).catch((e) => {
+          console.log("ERRROR")
+          console.log(e)
+        });
+      }
+      valueStorage()
+    } catch (e) {
+      console.log("ERRROR")
+    }
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <View>
+        <Header navigation={navigation} route={route} />
+      </View>
+      <View style={{ marginBottom: 20 }}>
+        <FlatList
+          data={dskhoahocState}
+          renderItem={Item}
+        />
+      </View>
     </View>
   );
 }
@@ -99,10 +115,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0
   },
+  container: {
+    height: '100%',
+    width: '100%',
+  },
   view2: {
     position: 'absolute',
     top: 150,
     left: 15,
+    
   },
   view3: {
     position: 'absolute',

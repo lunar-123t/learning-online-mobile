@@ -89,25 +89,26 @@ export default function SignInScreen(this: any, { navigation }: RootTabScreenPro
                 "Đăng Nhập Thành Công",
                 "Nhấn Ok để tiếp tục",
                 [
-                  { text: "OK", onPress: () => navigation.navigate("Home") }
+
+                  { text: "OK", onPress: () => navigation.navigate("Bottom") }
                 ]
               );
-
               try {
                 await AsyncStorage.setItem('taikhoandaluu', access)
               } catch (e) {
+                console.log(e)
                 // saving error
               }
               onChangtaikhoanluu(taikhoanluu)
             }
             else
-            Alert.alert(
-              "Đăng Nhập Không Thành Công",
-              "Sai Tên Hoặc Mật Khẩu",
-              [
-                { text: "Đăng Ký tài khoản", onPress: () => navigation.navigate("SignUp") }
-              ]
-            );
+              Alert.alert(
+                "Đăng Nhập Không Thành Công",
+                "Sai Tên Hoặc Mật Khẩu",
+                [
+                  { text: "Đăng Ký tài khoản", onPress: () => navigation.navigate("SignUp") }
+                ]
+              );
 
           }).catch((errol) => {
             alert("call API that bai")

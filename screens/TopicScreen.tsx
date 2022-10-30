@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { StyleSheet, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
@@ -40,17 +41,33 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
 
     </TouchableOpacity>
   )
+
   useEffect(() => {
-    axios.get(`https://learningapp2.herokuapp.com/khoahoc/listlevel?idkhoahoc=2`, config).then((response) => {
-      const data = response.data
-      setdskhoahoc(data)
-      // console.log(data)
-
-    }).catch((e) => {
-      // console.log(e)
-    });
-
+    try {
+      const valueStorage = async () => {
+        const value = await AsyncStorage.getItem('taikhoandaluu')
+        const config = {
+          headers: {
+            Authorization: `Bearer ${value}`,
+          }
+        };
+        // console.log("hahaha")
+        // console.log(value)
+        axios.get(`${baseUrl}/khoahoc/listlevel?idkhoahoc=2`, config).then(async (response) => {
+          const data = response.data;
+          setdskhoahoc(data)
+          // console.log(data)
+        }).catch((e) => {
+          console.log("ERRROR")
+          console.log(e)
+        });
+      }
+      valueStorage()
+    } catch (e) {
+      console.log("ERRROR")
+    }
   }, []);
+
   return (
     <View>
       <View style={{ width: '100%',height:'100%' }}>
@@ -77,8 +94,6 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
                   renderItem={Item}
                   numColumns={2}
                 />
-
-
               </View>
 
             </>

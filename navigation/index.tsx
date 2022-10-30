@@ -71,9 +71,8 @@ function RootNavigator() {
     <Stack.Navigator>
       {/* StartNavigator */}
       {/* BottomTabNavigator */}
-      {/* <Stack.Screen name="Root" component={StartNavigator} options={{ headerShown: false }} /> */}
-      {/* <Stack.Screen name="Home" component={HomeNavigator} options={{ headerShown: false }} /> */}
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Root" component={StartNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Bottom" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -155,7 +154,6 @@ function StartNavigator() {
       <Stack.Screen name="TabStart" component={StartScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Nut" component={NutScreen} options={{ headerShown: false }} />
       <Stack.Screen name="QuenMK" component={QuenMKScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Slidershow" component={Slidershow} options={{ headerShown: false }} />
@@ -170,7 +168,6 @@ function HomeNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      {/* <Stack.Screen name="ListLopHocScreen" component={ListLopHocScreen} options={{ headerShown: false }} /> */}
       <Stack.Screen name='ListLopHocScreen' component={ListLopHocScreen} options={{
         headerRight: () => (
           <TouchableOpacity
@@ -182,7 +179,6 @@ function HomeNavigator() {
         )
       }}
       />
-      {/* <Stack.Screen name="Topic" component={TopicScreen} options={{ headerShown: false }} /> */}
       <Stack.Screen name='Topic' component={TopicScreen} options={{
         headerRight: () => (
           <TouchableOpacity
