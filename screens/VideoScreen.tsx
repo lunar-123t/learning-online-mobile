@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity, AsyncStorage } from "react-native";
+import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import Icon from "react-native-vector-icons/Ionicons"
 import { env } from "../env";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ3MzkxLCJpYXQiOjE2NjY1MTEzOTEsImp0aSI6IjEwMzNmZmFjZTZhMDRiZGJiMjUyNGFhODAzZmFlYTQzIiwidXNlcl9pZCI6Mn0.wCtQueyw0gdpW_5gFfzMuZimS0lJWnu0wMUlY_f70iI"
 const config = {
-  
   headers: {
     Authorization: `Bearer ${token}`
   }
@@ -30,23 +30,36 @@ export default function VideoScreen() {
   }, []);
 
   useEffect(() => {
-    console.log(`${baseUrl}khoahoc/listvideo`);
-    axios.get(`${baseUrl}khoahoc/listvideo`, config).then((response) => {
-      const data = response.data;
-      setDsvideo(data);
-
-    }).catch((e) => {
-
-    });
+    try {
+      const valueStorage = async () => {
+        const value = await AsyncStorage.getItem('taikhoandaluu')
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+        // console.log("hahaha")
+        // console.log(value)
+        axios.get(`${baseUrl}/khoahoc/listvideo`, config).then(async (response) => {
+          const data = response.data;
+          setDsvideo(data)
+          // console.log(data)
+        }).catch((e) => {
+          console.log("ERRROR")
+          console.log(e)
+        });
+      }
+      valueStorage()
+    } catch (e) {
+      console.log("ERRROR")
+    }
   }, []);
-
 
   const Item = ({ item }) => (
     <View style={{ width: '99.5%', height: 101, backgroundColor: '#f2f2f2', margin: 1 }}>
 
       <TouchableOpacity style={{ flexDirection: 'row' }}
         onPress={() => {
-
           setVideoid(item.video_id)       
       }} 
         >

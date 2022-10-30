@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
-import {AsyncStorage, SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, Alert, } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, FlatList, View, Text, StatusBar, TouchableOpacity, Dimensions, Alert, } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import { env } from '../env';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const { width, height } = Dimensions.get('window');
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 const COLORS = { primary: '#282534', white: '#fff' };
 
 
@@ -58,9 +59,10 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
     try {
       const valueStorage = async () => {
         const value = await AsyncStorage.getItem('taikhoandaluu')
-        console.log(value)
+        // console.log(value)
         if (value !== null) {
-          navigation.navigate("Home")
+
+          navigation.navigate("Bottom")
         }
         else {
           console.log("xuong day")
@@ -71,17 +73,16 @@ export default function StartScreen({ navigation }: RootTabScreenProps<'TabStart
             // console.log(response)
           }).catch((e) => {
             console.log("ERRROR")
+            // console.log(e)
             // error reading value
           });
         }
       }
-      valueStorage()     
+      valueStorage()
     } catch (e) {
       console.log("ERRROR")
       // error reading value
     }
-    
-
   }, []);
 
 
