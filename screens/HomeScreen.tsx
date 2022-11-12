@@ -8,9 +8,17 @@ import { RootTabScreenProps } from '../types';
 import axios from 'axios';
 import { env } from '../env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
+import{setKhoahoc} from '../store/actions/khoahoc'
 
+type Props = {
+  khoa: any,
+  setKhoahoc: (Value:any) => void,
+  navigation: any   ,
+  route:any
+ }
 const { baseUrl } = env();
-export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Home'>) {
+function HomeScreen(props:Props) {
   const [dskhoahocState, setDskhoahocState] = React.useState([])
   const Logout = async () => {
     const valueStorage = await AsyncStorage.getItem('taikhoandaluu')
@@ -39,13 +47,12 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
       ]
     );
   }
-
   const Item = ({ item }) => (
     <View>
-
-      <TouchableOpacity style={{}}
+      <TouchableOpacity 
         onPress={() => {
-          navigation.navigate('Topic')
+          props.setKhoahoc(item.id)
+          props.navigation.navigate('Topic')
         }}
       >
         <ImageBackground style={styles.img} source={{ uri: item.url_anh }} resizeMode="cover">
@@ -69,7 +76,6 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
         const value = await AsyncStorage.getItem('taikhoandaluu')
         const config = {
           headers: { Authorization: `Bearer ${value}` },
-          data: { "idlevel": 1 }
         };
         // console.log("hahaha")
         // console.log(value)
@@ -79,7 +85,7 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
           // console.log(data)
         }).catch((e) => {
           console.log("ERRROR")
-          console.log(e)
+          // console.log(e)
         });
       }
       valueStorage()
@@ -88,10 +94,11 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
     }
   }, []);
 
+
   return (
     <View style={styles.container}>
       <View>
-        <Header navigation={navigation} route={route} />
+        <Header navigation={props.navigation} route={props.route} />
       </View>
       <View style={{ marginBottom: 20 }}>
         <FlatList
@@ -101,6 +108,7 @@ export default function HomeScreen({ navigation, route }: RootTabScreenProps<'Ho
       </View>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -152,3 +160,14 @@ const styles = StyleSheet.create({
     margin: 20,
   }
 });
+
+const mapStateToProps = (state:any) => ({
+  // usercoin: state.usercoin,
+  khoa: state.khoahoc
+})
+
+const mapDispatchToProps = {
+  setKhoahoc
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

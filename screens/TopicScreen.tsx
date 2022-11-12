@@ -6,24 +6,25 @@ import { StyleSheet, TextInput, Image, FlatList, TouchableOpacity } from 'react-
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { env } from '../env';
+import { connect } from 'react-redux';
+import { setKhoahoc } from '../store/actions/khoahoc'
 import { RootTabScreenProps } from '../types';
 // import Header from './Header';
 const { baseUrl } = env();
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ3NDgyLCJpYXQiOjE2NjY1MTE0ODIsImp0aSI6IjMwY2ZkMGJiZWRhMDQxZjViZjIzYTNhMjU1ZTE1NzVhIiwidXNlcl9pZCI6Mn0.NIaO21d7VvqDD-fGwxDTmhRPKjH1p098QTT_YkTlIKc"
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  }
-};
+type Props = {
+  khoa: any,
+  setKhoahoc: (Value: any) => void,
+  navigation: any
+}
 
-export default function TopicScreen(this: any, { navigation }: RootTabScreenProps<'Topic'>) {
+function TopicScreen(props: Props) {
   const [dskhoahocstate, setdskhoahoc] = React.useState([])
   const Item = ({ item }) => (
-    <TouchableOpacity 
-    onPress={
-      ()=>{
-        navigation.navigate('VideoScreen')
-    }}
+    <TouchableOpacity
+      onPress={
+        () => {
+          props.navigation.navigate('VideoScreen')
+        }}
     >
       <View style={{ margin: 10 }}>
         <Image
@@ -51,9 +52,8 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
             Authorization: `Bearer ${value}`,
           }
         };
-        // console.log("hahaha")
-        // console.log(value)
-        axios.get(`${baseUrl}/khoahoc/listlevel?idkhoahoc=2`, config).then(async (response) => {
+        const valueid = (props.khoa.Khoa)
+        axios.get(`${baseUrl}/khoahoc/listlevel?idkhoahoc=${valueid}`, config).then(async (response) => {
           const data = response.data;
           setdskhoahoc(data)
           // console.log(data)
@@ -70,7 +70,7 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
 
   return (
     <View>
-      <View style={{ width: '100%',height:'100%' }}>
+      <View style={{ width: '100%', height: '100%' }}>
         {dskhoahocstate.map((item, key) => {
           return (
             <>
@@ -80,7 +80,8 @@ export default function TopicScreen(this: any, { navigation }: RootTabScreenProp
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('ListLopHocScreen')
+                    
+                    props.navigation.navigate('ListLopHocScreen')
 
                   }}
                 >
@@ -121,6 +122,12 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-function setLoading(arg0: boolean) {
-  throw new Error('Function not implemented.');
+const mapStateToProps = (state: any) => ({
+  // usercoin: state.usercoin,
+  khoa: state.khoahoc,
+})
+const mapDispatchToProps = {
+  setKhoahoc
 }
+
+export default connect(mapStateToProps,mapDispatchToProps)(TopicScreen);

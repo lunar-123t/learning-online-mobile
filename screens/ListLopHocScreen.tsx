@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Image, FlatList, StatusBar } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
+import { StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Text, View, } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
 import { env } from '../env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
 const { baseUrl } = env();
-
-export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'ListLopHocScreen'>) {
+type Props = {
+  khoa: any,
+  setKhoahoc: (Value:any) => void,
+  navigation: any   
+ }
+function ListLopHocScreen(props:Props) {
   const [dsState, setDsState] = React.useState([])
   const Item = ({ item }) => (
     <View style={styles.container}>
@@ -17,7 +19,7 @@ export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'Lis
         <TouchableOpacity
           style={{ width: 150, height: 160, borderWidth: 1, borderColor: "#DDDDDD", borderRadius: 10, bottom: 0, left: 20 }}
           onPress={() => {
-            navigation.navigate('VideoScreen')
+            props.navigation.navigate('VideoScreen')
 
           }}
         >
@@ -36,30 +38,17 @@ export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'Lis
     </View>
 
   );
-  // useEffect(() => {
-  //   axios.get(`${baseUrl}/khoahoc/listalllevel?idlevel=1`, config).then((response) => {
-  //     const data = response.data;
-  //     setDsState(data)
-
-  //   }).catch((e) => {
-  //     console.log(e)
-  //   });
-  // }, []);
-
   useEffect(() => {
     try {
       const valueStorage = async () => {
         const value = await AsyncStorage.getItem('taikhoandaluu')
         const config = {
           headers: { Authorization: `Bearer ${value}` },
-          data: { "idlevel": 1 }
         };
-        // console.log("hahaha")
-        // console.log(value)
-        axios.get(`${baseUrl}/khoahoc/listalllevel?idlevel=1`, config).then(async (response) => {
+        const valueid = (props.khoa.Khoa)
+        axios.get(`${baseUrl}/khoahoc/listalllevel?idlevel=${valueid}`, config).then(async (response) => {
           const data = response.data;
           setDsState(data)
-          // console.log(data)
         }).catch((e) => {
           console.log("ERRROR")
           console.log(e)
@@ -73,7 +62,6 @@ export default function ListLopHocScreen({ navigation }: RootTabScreenProps<'Lis
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", bottom: 0, left: 30 }}>Khóa học Cơ bản: </Text>
       <View style={{ marginBottom: 20 }}>
         <FlatList
           data={dsState}
@@ -102,3 +90,10 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+const mapStateToProps = (state:any) => ({
+  // usercoin: state.usercoin,
+  khoa: state.khoahoc
+})
+
+
+export default connect(mapStateToProps)(ListLopHocScreen);

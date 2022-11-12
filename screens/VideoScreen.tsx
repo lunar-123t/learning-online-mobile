@@ -88,7 +88,6 @@ export default function VideoScreen() {
     <View style={{ borderWidth: 1, height: 760, backgroundColor: '#ffffff' }}>
 
       <YoutubePlayer
-
         height={229}
         play
         videoId={videoid}
