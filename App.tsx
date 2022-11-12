@@ -3,6 +3,8 @@ import React from 'react';
 import { View,Image,Text,TouchableOpacity,StyleSheet} from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons"
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import store from './store';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
@@ -17,12 +19,10 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        {/* <Header/> */}
+      <Provider store={store}>
         <Navigation colorScheme={colorScheme} />
         <StatusBar />
-        {/* <Bottom/> */}
-      </SafeAreaProvider>
+      </Provider>
     );
   }
 }
