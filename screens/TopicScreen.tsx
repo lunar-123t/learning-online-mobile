@@ -7,13 +7,17 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { env } from '../env';
 import { connect } from 'react-redux';
-import { setKhoahoc } from '../store/actions/khoahoc'
+import { setKhoahoc,setListmonhoc, setList_video_mon_hoc } from '../store/actions/khoahoc'
 import { RootTabScreenProps } from '../types';
 // import Header from './Header';
 const { baseUrl } = env();
 type Props = {
   khoa: any,
+  monhoc: any,
+  videomonhoc:any,
   setKhoahoc: (Value: any) => void,
+  setListmonhoc: (Value: any) => void,
+  setList_video_mon_hoc: (Value: any) => void,
   navigation: any
 }
 
@@ -23,6 +27,7 @@ function TopicScreen(props: Props) {
     <TouchableOpacity
       onPress={
         () => {
+          props.setList_video_mon_hoc(item.id)
           props.navigation.navigate('VideoScreen')
         }}
     >
@@ -80,7 +85,7 @@ function TopicScreen(props: Props) {
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    
+                    props.setListmonhoc(item.id)
                     props.navigation.navigate('ListLopHocScreen')
 
                   }}
@@ -125,9 +130,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: any) => ({
   // usercoin: state.usercoin,
   khoa: state.khoahoc,
+  monhoc: state.khoahoc,
+  videomonhoc: state.khoahoc,
 })
 const mapDispatchToProps = {
-  setKhoahoc
+  setListmonhoc,
+  setList_video_mon_hoc,
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(TopicScreen);

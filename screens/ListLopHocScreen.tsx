@@ -5,13 +5,18 @@ import { env } from '../env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
+import { setList_video_mon_hoc } from '../store/actions/khoahoc';
 const { baseUrl } = env();
 type Props = {
   khoa: any,
-  setKhoahoc: (Value:any) => void,
-  navigation: any   
- }
-function ListLopHocScreen(props:Props) {
+  monhoc: any,
+  videomonhoc:any,
+  setKhoahoc: (Value: any) => void,
+  setListmonhoc: (Value: any) => void,
+  setList_video_mon_hoc: (Value: any) => void,
+  navigation: any
+}
+function ListLopHocScreen(props: Props) {
   const [dsState, setDsState] = React.useState([])
   const Item = ({ item }) => (
     <View style={styles.container}>
@@ -19,6 +24,7 @@ function ListLopHocScreen(props:Props) {
         <TouchableOpacity
           style={{ width: 150, height: 160, borderWidth: 1, borderColor: "#DDDDDD", borderRadius: 10, bottom: 0, left: 20 }}
           onPress={() => {
+            props.setList_video_mon_hoc(item.id)
             props.navigation.navigate('VideoScreen')
 
           }}
@@ -45,7 +51,7 @@ function ListLopHocScreen(props:Props) {
         const config = {
           headers: { Authorization: `Bearer ${value}` },
         };
-        const valueid = (props.khoa.Khoa)
+        const valueid = (props.monhoc.Monhoc)
         axios.get(`${baseUrl}/khoahoc/listalllevel?idlevel=${valueid}`, config).then(async (response) => {
           const data = response.data;
           setDsState(data)
@@ -69,6 +75,7 @@ function ListLopHocScreen(props:Props) {
           numColumns={2}
         />
       </View>
+
     </View>
   );
 }
@@ -90,10 +97,15 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state: any) => ({
   // usercoin: state.usercoin,
-  khoa: state.khoahoc
+  khoa: state.khoahoc,
+  monhoc: state.khoahoc,
+  videomonhoc: state.khoahoc,
 })
+const mapDispatchToProps = {
+  setList_video_mon_hoc
+}
 
 
-export default connect(mapStateToProps)(ListLopHocScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(ListLopHocScreen);
