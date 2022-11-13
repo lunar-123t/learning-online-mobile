@@ -1,21 +1,25 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Button, View,StyleSheet, Alert, Text, Image ,FlatList, TouchableOpacity } from "react-native";
+import { Button, View, StyleSheet, Alert, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import Icon from "react-native-vector-icons/Ionicons"
 import { env } from "../env";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ3MzkxLCJpYXQiOjE2NjY1MTEzOTEsImp0aSI6IjEwMzNmZmFjZTZhMDRiZGJiMjUyNGFhODAzZmFlYTQzIiwidXNlcl9pZCI6Mn0.wCtQueyw0gdpW_5gFfzMuZimS0lJWnu0wMUlY_f70iI"
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-};
+import { connect } from 'react-redux';
+import { setList_video_mon_hoc } from "../store/actions/khoahoc";
 const { baseUrl } = env();
+type Props = {
+  khoa: any,
+  monhoc: any,
+  videomonhoc: any,
+  setKhoahoc: (Value: any) => void,
+  setListmonhoc: (Value: any) => void,
+  setList_video_mon_hoc: (Value: any) => void,
+  navigation: any
+}
 
-
-export default function VideoScreen() {
-  const [videoid, setVideoid] = useState("O71GdeeND68");
+function VideoScreen(props: Props) {
+  const [videoid, setVideoid] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [dsvideo, setDsvideo] = React.useState([]);
   const onStateChange = useCallback((state: string) => {
@@ -35,15 +39,17 @@ export default function VideoScreen() {
         const value = await AsyncStorage.getItem('taikhoandaluu')
         const config = {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${value}`
           }
         };
-        // console.log("hahaha")
-        // console.log(value)
-        axios.get(`${baseUrl}/khoahoc/listvideo`, config).then(async (response) => {
+        // console.log('haha')
+        const valueid = (props.videomonhoc.Videomonhoc)
+        // console.log(valueid)
+        axios.get(`${baseUrl}/khoahoc/listvideo?idmonhoc=${valueid}`, config).then(async (response) => {
           const data = response.data;
           setDsvideo(data)
-          // console.log(data)
+          setVideoid(data[0].video_id)
+          console.log(data)
         }).catch((e) => {
           console.log("ERRROR")
           console.log(e)
@@ -60,27 +66,28 @@ export default function VideoScreen() {
 
       <TouchableOpacity style={{ flexDirection: 'row' }}
         onPress={() => {
-          setVideoid(item.video_id)       
-      }} 
-        >
-          <View style={{width:'50%',height:50,margin:1}}>
-            
-            <Image
-              style={{width:'80%',height:98}}
-              source={{uri:item.url_anh}}
-            />
-          </View>
-          <View style={{right:30}}>
-            <Text>
-               {item.ten_bai}
-            </Text>
-            <Text>
-              <Icon name="time-outline" size={14}/>
-              {item.thoi_luong}
-            </Text>
-          </View>
-        </TouchableOpacity>    
-    </View>       
+
+          setVideoid(item.video_id)
+        }}
+      >
+        <View style={{ width: '50%', height: 50, margin: 1 }}>
+
+          <Image
+            style={{ width: '80%', height: 98 }}
+            source={{ uri: item.url_anh }}
+          />
+        </View>
+        <View style={{ right: 30 }}>
+          <Text>
+            {item.ten_bai}
+          </Text>
+          <Text>
+            <Icon name="time-outline" size={14} />
+            {item.thoi_luong}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 
 
@@ -94,10 +101,13 @@ export default function VideoScreen() {
         // videoId="O71GdeeND68"
         onChangeState={onStateChange}
       />
+
       <FlatList
         data={dsvideo}
         renderItem={Item}
       />
+
+
     </View>
   );
 };
@@ -122,3 +132,13 @@ const styles = StyleSheet.create({
     height: 300
   }
 });
+const mapStateToProps = (state: any) => ({
+  // usercoin: state.usercoin,
+  khoa: state.khoahoc,
+  monhoc: state.khoahoc,
+  videomonhoc: state.khoahoc,
+})
+
+
+
+export default connect(mapStateToProps)(VideoScreen);

@@ -1,7 +1,9 @@
-import { KHOA_HOC, } from '../types';
+import { KHOA_HOC,LIST_MON_HOC, LIST_VIDEO_MON_HOC } from '../types';
 
 const initialstate = {
     Khoa: 1,
+    Monhoc: 1,
+    Videomonhoc: 1,
 
 };
 
@@ -15,6 +17,14 @@ export default (state: any = initialstate, action: Action) => {
         case KHOA_HOC:
             return Object.assign({}, state, {
                 Khoa: action.payload,
+            });
+        case LIST_MON_HOC:
+            return Object.assign({}, state, {
+                Monhoc: action.payload,
+            });
+        case LIST_VIDEO_MON_HOC:
+            return Object.assign({}, state, {
+                Videomonhoc: action.payload,
             });
         default:
             return state;
