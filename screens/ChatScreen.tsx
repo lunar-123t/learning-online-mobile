@@ -7,113 +7,175 @@ import {
   Button,
   FlatList,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  AsyncStorage
 } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import Icon from "react-native-vector-icons/Ionicons"
 import Header2 from './Header2';
-const Messages=[
-    {
-        id:'1',
-        messageText:'Hi',
-        is_my_messages: true
-    },
-    {
-        id:'2',
-        messageText:'Hi Thanh! How are you?',
-        is_my_messages: false
-    },
-    {
-        id:'3',
-        messageText:'I`m good and you? ',
-        is_my_messages: true
-    },
-    {
-        id:'4',
-        messageText:'I`m doing good.what are you doing?',
-        is_my_messages: false
-    },
-    {
-        id:'5',
-        messageText:'I`m working on my app design',
-        is_my_messages: true
-    },
-    {
-        id:'6',
-        messageText:'Let`s get lauch! How about sushi',
-        is_my_messages: false
-    },
-    {
-        id:'7',
-        messageText:'That sounds great!',
-        is_my_messages: true
-    },
-    {
-      id:'8',
-      messageText:'That sounds great!',
-      is_my_messages: false
-  },
-]
+import { env } from '../env';
+import axios from 'axios';
+
+const { baseUrl } = env();
+// const Messages=[
+//     {
+//         id:'1',
+//         messageText:'Hi',
+//         is_my_messages: true
+//     },
+//     {
+//         id:'2',
+//         messageText:'Hi Thanh! How are you?',
+//         is_my_messages: false
+//     },
+//     {
+//         id:'3',
+//         messageText:'I`m good and you? ',
+//         is_my_messages: true
+//     },
+//     {
+//         id:'4',
+//         messageText:'I`m doing good.what are you doing?',
+//         is_my_messages: false
+//     },
+//     {
+//         id:'5',
+//         messageText:'I`m working on my app design',
+//         is_my_messages: true
+//     },
+//     {
+//         id:'6',
+//         messageText:'Let`s get lauch! How about sushi',
+//         is_my_messages: false
+//     },
+//     {
+//         id:'7',
+//         messageText:'That sounds great!',
+//         is_my_messages: true
+//     },
+    
+// ]
 
 
 
 export default function ChatScreen(this: any) {
-    const Item = ({ item }) => (
-        <View style={{alignItems: 'baseline'}}>
-            <View style={[styles.textviewchung, item.is_my_messages? styles.textview1 : styles.textview2]} >
-              {item.is_my_messages 
-                ? <Image style={styles.avatar} source={{ uri: 'https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/274482832_677862406675394_8009174730975749305_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=W_859P0JpAYAX_5XL5n&_nc_ht=scontent.fdad3-1.fna&oh=00_AfBwXs6JO7SmC3zx4OwitJNlcgrrBpcy9M-3FRd2BUPJQw&oe=6363E19B' }}/>
-                : null
-              }
-              <View style={[styles.textchung, item.is_my_messages? styles.text1 : styles.text2]}>
-                <Text style={[styles.textchung, item.is_my_messages? styles.text3 : styles.text4]} > {item.messageText}</Text>
-              </View>
-            </View>
-         
+  const [listmessagestate, setListmessage] = React.useState([{
+    id:8,
+    messageText:'That sounds great!',
+    is_my_messages: false
+},]);
+  const [message, setMessage] = React.useState('');
+  const Item = ({ item }) => (
+    <View style={{ alignItems: 'baseline' }}>
+      <View style={[styles.textviewchung, item.is_my_messages ? styles.textview2 : styles.textview1]} >
+        {item.is_my_messages
+
+          ? null
+          : <Image style={styles.avatar} source={{ uri: 'https://vcdn1-giaitri.vnecdn.net/2022/08/25/Avatar-213-8923-1661403266.png?w=0&h=0&q=100&dpr=2&fit=crop&s=KWo2kCkyQr5Xxia52ObvvA' }} />
+        }
+        <View style={[styles.textchung, item.is_my_messages ? styles.text2 : styles.text1]}>
+          <Text style={[styles.textchung, item.is_my_messages ? styles.text4 : styles.text3]} > {item.message_text}</Text>
         </View>
-        
-       
-    );
-    
-   
+      </View>
+
+    </View>
+
+
+  );
+  useEffect(() => {
+    try {
+      const valueStorage = async () => {
+        const value = await AsyncStorage.getItem('taikhoandaluu')
+        const config = {
+          headers: {
+            Authorization: `Bearer ${value}`,
+          }
+        };
+        axios.get(`${baseUrl}/chat/listmess`, config).then(async (response) => {
+          const data = response.data;
+          console.log(data)
+          setListmessage(data)
+        }).catch((e) => {
+          // console.log("ERRROR")
+          console.log(e)
+        });
+      }
+      valueStorage()
+    } catch (e) {
+      console.log("ERRROR")
+    }
+  }, []);
   return (
     <KeyboardAvoidingView
-    
-      behavior="padding"
+
+      behavior="position"
+
     >
-      <View>
-        <Header2 />
-      </View>
-      <View>
-        <Text style={{color:'#bababa',alignSelf: 'center'}}>
-          15:00,20 THG 8
-        </Text>
-        
-      </View>
-      <FlatList
-          data = {Messages} 
-          keyExtractor = {item=>item.id}
-          renderItem={Item}       
-      />
-      
-      
-      <View style={{borderRadius:15, backgroundColor:'#ebe9e8'}}>
-        <View style={{flexDirection:'row',width:'100%',backgroundColor:'#ebe9e8',padding:10}}>
-          <TextInput
-            style={{ fontSize:25, marginVertical: 5,width:'90%'}}
-            multiline={true}
-            placeholder="Aa"
-            
-          />  
-          <View style={{backgroundColor:'#ebe9e8'}}>
-           <Icon style={styles.icon} name='send' size={33} color='#1bc4de'/>
-          </View>
+      <View >
+        <View>
+          <Header2 />
         </View>
-      </View> 
-        <View style={{ height: 30 }} />
-      
-    </KeyboardAvoidingView> 
-    
+        <View>
+          <Text style={{ color: '#bababa', alignSelf: 'center' }}>
+            15:00,20 THG 8
+          </Text>
+
+        </View>
+
+        <View style={{ height: '85%' }}>
+          <FlatList
+            data={listmessagestate}
+            // keyExtractor={item => item.id}
+            renderItem={Item}
+          />
+          <View style={{ flexDirection: 'row', width: '100%', backgroundColor: '#ebe9e8', padding: 10 }}>
+            <TextInput
+              style={{ fontSize: 25, marginVertical: 5, width: '90%' }}
+              multiline={true}
+              value={message}
+              placeholder="Aa"
+              onChangeText={Text => setMessage(Text)}
+
+            />
+            <TouchableOpacity style={{ backgroundColor: '#ebe9e8' }}
+              onPress={async () => {
+
+                const value = await AsyncStorage.getItem('taikhoandaluu')
+                const config = {
+                  headers: {
+                    Authorization: `Bearer ${value}`,
+                  }
+                };
+                const data_guilen = {
+                  message_text: message
+                }
+                const listmessage22 = listmessagestate;
+                listmessage22.push({id:39,
+                is_my_messages: true,
+                message_text: message})
+                 
+                    
+                   
+                  
+              
+            axios.post(`${baseUrl}/chat/submit`, data_guilen, config).then((response) => {
+              console.log(response.data)
+                  setMessage("")
+            setListmessage(listmessage22)
+                }).catch((errol) => {
+              // console.error();
+              alert("call API that bai")
+            });
+              }}
+            >
+            <Icon style={styles.icon} name='send' size={33} color='#1bc4de' />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={{ height: 10 }} />
+    </View>
+    </KeyboardAvoidingView >
+
   );
 }
 
@@ -126,40 +188,44 @@ const styles = StyleSheet.create({
     borderColor: "#decdcc",
   },
   icon: {
-    top:10,
+    top: 10,
     backgroundColor: '#ebe9e8',
-    borderRadius:15
+    borderRadius: 15
 
   },
-  textview1:{
+  textview1: {
   },
-  textview2:{
-    alignSelf:'flex-end'
+  textview2: {
+    alignSelf: 'flex-end'
   },
-  textviewchung:{
-    marginBottom:43,
+  textviewchung: {
+    marginBottom: 43,
     marginLeft: 10,
     marginRight: 10,
-   flexDirection:'row',
+    flexDirection: 'row',
   },
-  text1:{
-    backgroundColor:'#decdcc',
-    borderRadius:15,
+  text1: {
+    backgroundColor: '#decdcc',
+    borderRadius: 15,
   },
-  text2:{
-    backgroundColor:'#31a2c4',
-    borderRadius:15,
+  text2: {
+    backgroundColor: '#31a2c4',
+    borderRadius: 15,
   },
-  text3:{
+  text3: {
   },
-  text4:{
-    color:'#fafafa',
+  text4: {
+    color: '#fafafa',
   },
-  textchung:{
-    fontSize:15,
-    padding:5, 
+  textchung: {
+    fontSize: 15,
+    padding: 5,
   },
-  
+
 });
 
+
+function config(arg0: string, config: any) {
+  throw new Error('Function not implemented.');
+}
 
