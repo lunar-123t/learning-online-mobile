@@ -1,7 +1,7 @@
 
 
 export const env = () => {
-    const baseUrl = "https://learningapp2.herokuapp.com"
+    const baseUrl = "http://54.204.239.247"
   
     return {
         baseUrl
